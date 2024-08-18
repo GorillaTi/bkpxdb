@@ -5,7 +5,7 @@
 !.dockerignore
 !Dockerfile
 # Si tienes un Dockerfile de producción específico
-!Dockerfile.prod  
+!Dockerfile.prod
 #docker-compose.override.yml
 
 # Archivos de configuración de Kubernetes si también usas Kubernetes
@@ -13,6 +13,7 @@
 
 # Ignore local development environment files
 .env
+.conf
 
 # Imágenes Docker y capas de imágenes
 *.tar
