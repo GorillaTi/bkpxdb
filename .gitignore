@@ -12,8 +12,8 @@
 !k8s/
 
 # Ignore local development environment files
-.env
-.conf
+**/.env
+**/.conf
 
 # Imágenes Docker y capas de imágenes
 *.tar
