@@ -21,6 +21,8 @@ RUN apt-get update && apt-get upgrade -y && \
 RUN apt-get install -y mydumper \
     postgresql-client 
 
+RUN apt-get install -y cron
+
 RUN apt-get clean && \
     rm -rf /var/lib/apt/lists/* \
     /tmp/* \
