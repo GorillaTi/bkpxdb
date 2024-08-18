@@ -5,7 +5,8 @@
 # NOMBRE: run.sh
 # Version: 1.0.0
 # FUNSION:
-# Copia de Seguridad de bases de datos MYSQL MariaDn y PosrgreSQL
+# Configura  la hora de ejecucion del script  de copia de seguridad de las de bases de
+# datos MYSQL MariaDn y PosrgreSQL
 
 # Copyright (c) 2024 Edmundo Cespedes A. <a.k.a. eksys>
 
