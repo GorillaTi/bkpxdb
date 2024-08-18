@@ -8,7 +8,7 @@ default:
 build:
     @echo {{version}}
     @echo {{name}}
-    docker build -f ${PWD}/docker-images/Dockerfile \
+    docker build -f ${PWD}/Dockerfile \
         -t {{user}}/{{name}}:{{version}} \
         -t {{user}}/{{name}}:latest \
         .
