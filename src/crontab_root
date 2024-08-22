@@ -1,0 +1,3 @@
+* * * * * root date >> /var/log/cron.log 2>&1
+* * * * * root cron-test
+# New line charter required!
