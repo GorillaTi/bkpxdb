@@ -16,29 +16,30 @@ build:
 push:
     docker push {{user}}/{{name}} --all-tags
 
-run-it:
-    docker run -it --rm \
-        ecespedes/{{name}}:latest \
-        bash
-
-run:
-    docker run --rm \
+run-d:
+    docker run  --rm \
         -d \
-        --hostname={{name}} \
-        --restart=always \
-        -p 3306:3306 \
-        -p 5432:5232 \
         --name {{name}} \
-        # --env-file .env \
-        # -v ${PWD}/crontab.txt:/app/crontab.txt \
+        -v ./logs:/var/log/ \
+        -v ./data/bkp_db/:/home/{{name}}/bkp_db \
         {{user}}/{{name}}:{{version}}
 
-sh:
+run:
+    docker run \
+        -d \
+        --name {{name}} \
+        #--hostname={{name}} \
+        #--restart=always \
+        # -p 3306:3306 \
+        # -p 5432:5232 \
+        # # --env-file .env \
+        -v ./logs:/var/log \
+        {{user}}/{{name}}:latest
+
+bash:
     docker run --rm \
         -it \
         --name {{name}} \
-        --init \
-        --env-file .env \
-        -v ${PWD}/crontab:/crontab \
-            {{user}}/{{name}}:{{version}} \
-        sh
+        -v ./logs:/var/log \
+        {{user}}/{{name}}:{{version}} \
+        bash
