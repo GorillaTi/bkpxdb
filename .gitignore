@@ -31,6 +31,7 @@
 .vscode/
 .idea/
 *.log
+*.bkp
 
 # Ignore sensitive files containing credentials or secrets
 *.pem
