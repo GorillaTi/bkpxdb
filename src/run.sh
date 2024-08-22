@@ -34,12 +34,12 @@
 # Exit if any command fails
 set -eou pipefail
 
-echo "=== Generate crontab.txt ==="
-echo "$HOME"
-SCHEDULE="${SCHEDULE:-0 */24 * * *}"
-echo "${SCHEDULE} /bin/sh /backup.sh >> /proc/1/fd/1" >> /cronitab/dockerus
+# echo "=== Generate crontab.txt ==="
+# echo "$HOME"
+# SCHEDULE="${SCHEDULE:-0 */24 * * *}"
+# echo "${SCHEDULE} /bin/sh /backup.sh >> /proc/1/fd/1" >> /cronitab/dockerus
 
-LOGLEVEL=${LOGLEVEL:-debug}
-echo "Set log level to '${LOGLEVEL}'"
-echo "Starting crond... $(date)"
-crond -c /cronitab -f -l "${LOGLEVEL}"
+#LOGLEVEL=${LOGLEVEL:-debug}
+#echo "Set log level to '${LOGLEVEL}'"
+echo "Starting crond... $(date)" >> /var/log/cron.log 2>&1
+cron  & >> /var/log/cron.log 2>&1
