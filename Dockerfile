@@ -2,50 +2,52 @@ FROM debian:12.6
 
 LABEL maintainer="Edmundo Céspedes A. <a.k.a. eksys> ed.cespedesa@gmail.com"
 
-ENV USER=bkpxdb \
-    UID=10001
+ENV TZ=America/La_Paz
 
-EXPOSE 3306
-EXPOSE 5432
+RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 
-RUN apt-get update && apt-get upgrade -y && \
-    apt-get install --no-install-recommends  -y \
+#EXPOSE 3306
+#EXPOSE 5432
+
+RUN apt-get update && apt-get upgrade -y 
+
+RUN apt-get install --no-install-recommends  -y \
     ca-certificates \
-    sudo \
     bash-completion \
+    sudo \
+    procps \
     curl \
     wget \
-    git \
     vim
+
+RUN apt-get install -y cron
 
 RUN apt-get install -y mydumper \
     postgresql-client 
-
-RUN apt-get install -y cron
 
 RUN apt-get clean && \
     rm -rf /var/lib/apt/lists/* \
     /tmp/* \
     /var/tmp/*
 
-RUN groupadd -g "${UID}" "${USER}"
+# Configurando script de prueba
+COPY src/test.sh /bin/cron-test
+RUN chmod 755 /bin/cron-test
 
-RUN useradd \
-    -m \
-    -s /bin/bash \
-    -u "${UID}" \
-    -g "${UID}" \
-    "${USER}"
-RUN passwd -d "${USER}"
+# Configurando Cron Jobs de general
+COPY src/crontab_root /etc/cron.d/bkpxdb-cron
+RUN chmod 644 /etc/cron.d/bkpxdb-cron
 
-RUN usermod -aG sudo "${USER}"
+# Configurando el directorio de trabajo de bkpxdb
+RUN mkdir -p app/bkp_db app/scripts
 
-RUN mkdir -p /home/"${USER}"/scripts /home/${USER}/bkpxdb
+# Configurando el directorio de trabajo scripts
+COPY src/backup.sh app/scripts/backup.sh
 
-COPY src/run.sh /home/"${USER}"/scripts/run.sh
-COPY src/backup.sh /home/"${USER}"/scripts/backup.sh
+# RUN chown -R bkpxdb:bkpxdb /home/"${USER}"/scripts
+RUN chmod -R 755 app/scripts/*.sh
 
-RUN chown -R bkpxdb:bkpxdb /home/"${USER}"/scripts
+# # Configurando el directorio de trabajo de bkpxdb
+RUN chmod -R 664 app/bkp_db
 
-USER bkpxdb
-WORKDIR /home/bkpxdb
+ENTRYPOINT  ["cron","-f"]
