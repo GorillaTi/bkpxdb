@@ -471,10 +471,10 @@ hora=$(f_time_day)
 dir_h=$(f_add_dir "$dir_d" "$hora")
 
 # Generando los Back-Up
-f_backup
+#f_backup
 
 # Envio de Back-Up a los sistemas de respaldo
-f_copy_remote
+#f_copy_remote
 
 # Captura de Logs
 #f_cat_logs "a"
