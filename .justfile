@@ -17,24 +17,23 @@ push:
     docker push {{user}}/{{name}} --all-tags
 
 run-d:
-    docker run  --rm \
+    docker run --rm \
         -d \
         --name {{name}} \
         -v ./logs:/var/log/ \
-        -v ./data/bkp_db/:/home/{{name}}/bkp_db \
+        -v ./data/bkp_db/:/app/{{name}}/bkp_db \
         {{user}}/{{name}}:{{version}}
 
 run:
-    docker run \
+    docker run --rm \
         -d \
         --name {{name}} \
-        #--hostname={{name}} \
-        #--restart=always \
-        # -p 3306:3306 \
-        # -p 5432:5232 \
-        # # --env-file .env \
-        -v ./logs:/var/log \
-        {{user}}/{{name}}:latest
+        --hostname={{name}} \
+        -p 3306:3306 \
+        -p 5432:5232 \
+        -v ./logs:/var/log/ \
+        -v ./data/bkp_db/:/app/bkp_db \
+        {{user}}/{{name}}:{{version}}
 
 bash:
     docker run --rm \
