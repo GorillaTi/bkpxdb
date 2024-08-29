@@ -38,16 +38,22 @@
 # Exit if any command fails
 set -eou pipefail
 
+# Directorio Actual
+dir_actual=$(pwd)
+# Iniciando Logs de Fatal Error
+error_log="/var/log/error.log"
+
 # ------------------------------------------------------------------------------
 # SOURCES
 # ------------------------------------------------------------------------------
 # Cargar las variables de entorno desde el archivo .env
-if [[ -f "$(pwd)/.conf" ]]; then
-	. "$(pwd)/.conf"
+if [[ -f "$dir_actual/scripts/.conf" ]]; then
+	. "$dir_actual/scripts/.conf"
 else
-	echo "[ERROR $(date +%Y-%m-%d:%H:%M)] El archivo .conf no existe." >>"$error_log"
+	echo " [ERROR $(date +%Y-%m-%d:%H:%M)] El archivo $dir_actual/scripts/.conf no existe." >>"$error_log"
 	exit 1
 fi
+# ------------------------------------------------------------------------------
 # ------------------------------------------------------------------------------
 # VARIABLES
 # ------------------------------------------------------------------------------
@@ -55,7 +61,7 @@ fi
 remote_user=$R_USER
 remote_host=$R_HOST
 remote_dir=$R_DIR
-#remote_pass=$R_PASS
+remote_pass=$R_PASS
 
 # Dia Actual, Mes Actual y año actual
 dia_actual=$(date +%d)
@@ -63,81 +69,110 @@ mes_actual=$(date +%m)
 anio_actual=$(date +%Y)
 hora_actual=$(date +%H)
 
-# Directorio Actual
-dir_actual=$(pwd)
-
 # Tipo de origen de archovo de datos de DB
 t_arch="${1:-csv}"
 
 # ubicacion archivos de datos de DB
 #a_lst="$dir_actual/db.lst"
-a_csv="$dir_actual/db_list.csv"
+a_csv="$dir_actual/list/db_list.csv"
 
 # Directorio BKP
-dir_bkp=$D_BKP
+dir_bkp="${D_BKP:-bkp_db}"
 
 # Archivos de logs
 tmp_log="/tmp/bkp_db.log"
-unset error_log
-unset log_file
+log_file="/var//log_file.log"
 
 # Directorios de trabajo
 unset dir_a
 unset dir_m
 unset dir_d
 unset dir_h
-# ------------------------------------------------------------------------------
 # FUNCIONES
 # ------------------------------------------------------------------------------
-# Lectura de archivos de logs
+# LECTURA DE ARCHIVOS DE LOGS
+# ------------------------------------------------------------------------------
+# f_cat_logs(activate)
+# Muestra los archivos de logs (tmp, error y log_file)
+# Si el parametro activate es "a" entonces muestra los logs
+# Si el parametro activate es diferente a "a" no muestra los logs
+# ------------------------------------------------------------------------------
 f_cat_logs() {
 	local activate=$1
 	case $activate in
-	"a")
-		if [[ -f $error_log ]]; then
-			echo "################## ERROR LOGS ##################"
-			cat "$error_log"
-		fi
-		if [[ -f $tmp_log ]]; then
-			echo "################## TEMPORAL LOGS ##################"
-			cat "$tmp_log"
-		fi
-		if [[ -f $log_file ]]; then
-			echo "################## LOGS ##################"
-			cat "$log_file"
-		fi
-		;;
-	*)
-		No Se Activo la captura de Logs
-		;;
+		"a")
+			# Mostrando los archivos de logs
+			if [[ -f $error_log ]]; then
+				echo "################## ERROR LOGS ##################"
+				cat "$error_log"
+			fi
+			if [[ -f $tmp_log ]]; then
+				echo "################## TEMPORAL LOGS ##################"
+				cat "$tmp_log"
+			fi
+			if [[ -f $log_file ]]; then
+				echo "################## LOGS ##################"
+				cat "$log_file"
+			fi
+			;;
+		*)
+			# No se activo la captura de Logs
+			echo "No se activo la captura de Logs"
+			;;
 	esac
 }
 
-# Seleccionando la hora del dia
+# SELECCIONA LA HORA DEL DIA
+# ------------------------------------------------------------------------------
+# f_time_day()
+# Selecciona la hora del dia y determina si es
+# 13:00 - Medio dia
+# 19:00 - Media tarde
+# 23:00 - Media noche
+# Otro valor - Temporal
+# ------------------------------------------------------------------------------
 f_time_day() {
 	local hora_dia
 	case $hora_actual in
+	# 13:00 - Medio dia
 	"13")
 		hora_dia="medio-dia"
 		;;
+	# 19:00 - Media tarde
 	"19")
 		hora_dia="media-tarde"
 		;;
+	# 23:00 - Media noche
 	"23")
 		hora_dia="media-noche"
 		;;
 	*)
+		# Otro valor - Temporal
 		hora_dia="temporal"
 		;;
 	esac
 	echo "$hora_dia"
 }
 
-# Creador de directorios
+# CREADOR DE DIRECTORIOS
+# ------------------------------------------------------------------------------
+# f_add_dir()
+#
+# Crea un nuevo directorio dentro de otro directorio existente.
+#
+# Parametros:
+#   - dir_orig: El directorio existente donde se creara el nuevo directorio.
+#   - dir_new: El nombre del nuevo directorio a crear.
+#
+# Retorno:
+#   - Si se crea el nuevo directorio, retorna la ruta completa del directorio creado.
+#   - Si no se crea el nuevo directorio, retorna un mensaje de error.
+# ------------------------------------------------------------------------------
 f_add_dir() {
 	local dir_orig="$1"
 	local dir_new="$2"
 
+	# Verificando si el directorio origen existe
 	if [[ -d $dir_orig ]]; then
 		# Cargando la estructura del nuevo directorio
 		local dir_add="$dir_orig/$dir_new"
@@ -149,23 +184,27 @@ f_add_dir() {
 			local stts="$?"
 			# Comprobando el resultado de la creacion del directorio
 			if [[ $stts -eq 0 ]]; then
+				# Si se crea el nuevo directorio, se registra el mensaje de log
 				echo "[WARNING $(date +%Y-%m-%d:%H:%M)] Directorio $dir_new creado en $dir_orig" >>"$tmp_log"
-				echo "$dir_add"
+				echo "$dir_add" # Retornando la ruta completa del directorio creado
 			else
+				# Si no se crea el nuevo directorio, se registra el mensaje de log con el error
 				echo "[ERROR $(date +%Y-%m-%d:%H:%M)] No se pudo crear el $dir_new." >>"$error_log"
-				exit 1
+				exit 1 # Termina la ejecucion del script
 			fi
 		else
+			# Si el directorio ya existe, se registra el mensaje de log
 			echo "[WARNING $(date +%Y-%m-%d:%H:%M)] Directorio $dir_new existente en $dir_orig" >>"$tmp_log"
-			echo "$dir_add"
+			echo "$dir_add" # Retornando la ruta completa del directorio existente
 		fi
 	else
+		# Si el directorio origen no existe, se registra el mensaje de error
 		echo "El directorio $dir_orig no existe"
-		exit 1
+		exit 1 # Termina la ejecucion del script
 	fi
 }
 
-# Creador de archivos
+# CREADOR DE ARCHIVOS
 f_add_arch() {
 	local dir_dest="$1"
 	local arch_new="$2"
@@ -197,6 +236,7 @@ f_add_arch() {
 	fi
 }
 
+# BACKUP DESDE DB.LIST
 f_backup_list() {
 	local filename
 	local res
@@ -213,7 +253,7 @@ f_backup_list() {
 	declare -a ARCHIVOS
 
 	# Inicializa la variable "num_rows"
-	local num_rows=$N_COLS
+	local num_rows=$N_ROWS
 
 	for ((i = 1; i <= num_rows; i++)); do
 		# Colocamos un nombre a la copia de segurida
@@ -240,8 +280,10 @@ f_backup_list() {
 	done
 }
 
+# TODO : comprobar el funcionamiento
+# BACKUP DESDE .CSV
 f_backup_csv() {
-	#local i
+	# Variables locales
 	local v_usser
 	local t_db
 	local v_pass
@@ -252,7 +294,7 @@ f_backup_csv() {
 	local ress
 	# Forma 1
 	#
-	# Verificamos que la copia de seguridad se haya ejetutado correctamente
+	# Verificamos que el archivo .csv exista
 	if [[ ! -f "$a_csv" ]]; then
 		echo "[ERROR $(date +%Y-%m-%d:%H:%M)] El archivo db_list.csv no existe." >>"$error_log"
 		exit 1
@@ -266,12 +308,13 @@ f_backup_csv() {
 		case "$t_db" in
 		"mysql" | "mdb")
 			# Ejecutamos DUMP de MYSQL y la copia de seguridad la colocamos en el directorio bkp
-			mysqldump --user="$v_usser" --password="$v_pass" --host="$v_ip" --port="$v_port" "$v_ndb" | gzip >"$dir_h/$filename"
+			# TODO: comprobar el funcionamiento
+			mysqldump --user="$v_usser" --password="$v_pass" --host="$v_ip" --port="$v_port" "$v_ndb" | gzip > "$dir_h/$filename"
 			local ress=${?}
 			;;
-		pg)
+		"pg"|"postgres")
 			# Ejecutamos DUMP de postgres y la copia de seguridad la colocamos en el directorio bkp
-			PGPASSWORD="$v_pass" pg_dump -h "$v_ip" -U "$v_usser" "$v_ndb" | gzip >"$dir_h/$filename"
+			PGPASSWORD="$v_pass" pg_dump -h "$v_ip" -U "$v_usser" "$v_ndb" | gzip > "$dir_h/$filename"
 			local ress=${?}
 			;;
 		*)
@@ -327,7 +370,7 @@ f_backup_csv() {
 	#	exit 1
 	#fi
 }
-
+# GENEREADOR DE RESPALDOS
 f_backup() {
 	# Creando archivo de Logs
 	log_file=$(f_add_arch "$dir_h" "$(date +%d%m%Y)-$hora.log")
@@ -361,6 +404,7 @@ f_backup() {
 	echo "[WARNING $(date +%Y-%m-%d:%H:%M)] Fin de Proceso de Respaldo de Bases de datos" >>"$log_file"
 }
 
+# COPIA DE ARCHIVOS REMOTOS
 f_copy_remote() {
 	local dir_nfs=$D_NFS
 	local dir_origen="$dir_actual/$dir_bkp"
@@ -417,6 +461,7 @@ f_copy_remote() {
 	esac
 }
 
+# ENVIO DE CORREO
 f_email() {
 	local res
 
@@ -471,10 +516,10 @@ hora=$(f_time_day)
 dir_h=$(f_add_dir "$dir_d" "$hora")
 
 # Generando los Back-Up
-#f_backup
+f_backup
 
 # Envio de Back-Up a los sistemas de respaldo
-#f_copy_remote
+f_copy_remote
 
 # Captura de Logs
-#f_cat_logs "a"
+f_cat_logs "a"
