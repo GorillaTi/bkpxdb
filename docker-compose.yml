@@ -1,15 +1,17 @@
 name: BkpXDB
 services:
     bkpxdb:
-        image: ecespedes/bkpxdb:latest
+        image: ecespedes/bkpxdb:${VER:-latest}
         container_name: bkpxdb
         hostname: bkpxdb
         restart: always
         ports:
-            - 3306:3306
-            - 5432:5232
+            - ${PORT_M:-3306}:3306
+            - ${PORT_P:-5432}:5432
         volumes:
-            - ./src/crontab_root:/etc/cron.d/bkpxdb-cron
-            - ./logs:/var/log
+            - ./src/crontab_root:/etc/cron.d/bkpxdb-cron:rw
+            - ./logs:/var/log/cron:rw
+            - ./logs:/var/log/app/:rw
             - ./data/bkp_db/:/app/bkp_db:rw
-            - ./src/list:/app/scripts/list
+            - ./src/list:/app/scripts/list:rw
+            - ./src/.conf:/app/scripts/.conf:rw
