@@ -5,23 +5,25 @@ LABEL maintainer="Edmundo Céspedes A. <a.k.a. eksys> ed.cespedesa@gmail.com"
 # Configurando zona horaria
 ENV TZ=America/La_Paz
 RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
+# Puertos habilitados
+EXPOSE 3306 5432
 
-#EXPOSE 3306
-#EXPOSE 5432
-
+# Actualizando paquetes
 RUN apt-get update && apt-get upgrade -y 
 
+# Instalación de paquetes necesarios
 RUN apt-get install --no-install-recommends  -y \
     ca-certificates \
     bash-completion \
+    inetutils-ping \
     curl \
     vim
 
-# Instalando cron
+# Instalación cron
 RUN apt-get install -y cron
 
-# Instalando clientes de base de datos
-RUN apt-get install -y mydumper \
+# Instalación clientes de base de datos
+RUN apt-get install -y default-mysql-client \
     postgresql-client 
 
 # Eliminando paquetes innecesarios
@@ -31,7 +33,7 @@ RUN apt-get clean && \
     /var/tmp/*
 
 # Configurando Cron Jobs de general
-COPY src/crontab_root /etc/cron.d/bkpxdb-cron
+COPY src/crontab /etc/cron.d/bkpxdb-cron
 RUN chown root:root /etc/cron.d/bkpxdb-cron && chmod 644 /etc/cron.d/bkpxdb-cron
 
 # Creando directorio de trabajo
