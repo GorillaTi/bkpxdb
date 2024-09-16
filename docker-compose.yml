@@ -9,7 +9,7 @@ services:
             - ${PORT_M:-3306}:3306
             - ${PORT_P:-5432}:5432
         volumes:
-            - ./src/crontab_root:/etc/cron.d/bkpxdb-cron:rw
+            - ./src/crontab:/app/crontab/crontab:rw
             - ./logs:/var/log/cron:rw
             - ./logs:/var/log/app/:rw
             - ./data/bkp_db/:/app/bkp_db:rw
