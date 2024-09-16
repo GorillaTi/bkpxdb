@@ -34,12 +34,14 @@
 # Exit if any command fails
 set -eou pipefail
 
-# echo "=== Generate crontab.txt ==="
-# echo "$HOME"
-# SCHEDULE="${SCHEDULE:-0 */24 * * *}"
-# echo "${SCHEDULE} /bin/sh /backup.sh >> /proc/1/fd/1" >> /cronitab/dockerus
+LOGS="/var/log/cron/cron.log"
 
-#LOGLEVEL=${LOGLEVEL:-debug}
-#echo "Set log level to '${LOGLEVEL}'"
-echo "Starting crond... $(date)" >> /var/log/cron.log 2>&1
-cron  & >> /var/log/cron.log 2>&1
+{
+    echo "Actualizando crontab";
+    cp /app/crontab/crontab /etc/cron.d/bkpxdb-cron;
+    chown root:root /etc/cron.d/bkpxdb-cron;
+    chmod 644 /etc/cron.d/bkpxdb-cron ;
+
+    echo "Starting crond... $(date)"
+    service cron  restart 
+} >> "$LOGS" 2>&1
