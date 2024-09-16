@@ -32,9 +32,13 @@ RUN apt-get clean && \
     /tmp/* \
     /var/tmp/*
 
-# Configurando Cron Jobs de general
+# Configurando Cron Jobs 
 COPY src/crontab /etc/cron.d/bkpxdb-cron
 RUN chown root:root /etc/cron.d/bkpxdb-cron && chmod 644 /etc/cron.d/bkpxdb-cron
+
+# Copiando scrip de configuración de Cron Jobs
+COPY src/cron-config.sh /usr/bin/cron-config
+RUN chmod +x /usr/bin/cron-config
 
 # Creando directorio de trabajo
 RUN mkdir -p app/bkp_db app/scripts
