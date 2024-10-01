@@ -30,6 +30,8 @@ example.env
 **/data
 **/mysql
 **/letsencrypt
+**/src/list/db.lst
+**/src/list/db_list.csv
 
 # Ignore development files and directories
 #node_modules/
