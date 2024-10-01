@@ -1,10 +1,12 @@
 #!/usr/bin/env bash
 
-# Autor: Jose Mendoaza Vargas
-#      : Edmundo Cespedes A.
+# Copyright (c) 2024 Edmundo Cespedes A. <a.k.a. eksys>
+# Author: Edmundo Cespedes A.
 # Licencia: MIT
-# NOMBRE: bkp_db (copia_seg)
-# Version: 2.0.0
-# FUNSION:
+# https://github.com/GorillaTi/bkpxdb/raw/main/LICENSE
+# Name Script: bkp_db (copia_seg)
+# Function:
 # Captura de Usuario y fecha de ejecucion del script
-echo "$(whoami) [$(date +%Y-%m-%d) - $(date +%H:%M:%S)]" >> /var/log/cron/cron-test.log 2>&1
+# Version: 2.0.0
+
+echo "$(whoami) [$(date +%Y-%m-%d) - $(date +%H:%M:%S)]" >>/var/log/cron/cron-test.log 2>&1
