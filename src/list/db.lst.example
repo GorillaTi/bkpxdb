@@ -1,0 +1,10 @@
+# Lista de Bases de Datos
+# declaramos una matriz de bases de datos
+declare -A mdb
+mdb[1, 1]="sysadmin"     # usuario
+mdb[1, 2]="12345.,"   # contraseña
+mdb[1, 3]="192.168.1.60" # servidor
+mdb[1, 4]="3306"           # puerto
+mdb[1, 5]="prueba"        # nombre BD
+mdb[1, 6]="mysql"          # tipo de base de datos (mysql o pg)
+
