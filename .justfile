@@ -13,8 +13,12 @@ build:
         -t {{user}}/{{name}}:latest \
         .
 
-push:
+push-all:
     docker push {{user}}/{{name}} --all-tags
+
+push-latest:
+    docker push {{user}}/{{name}} :{{version}} && \
+    docker push {{user}}/{{name}} :latest 
 
 run-d:
     docker run --rm \
