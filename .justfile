@@ -20,13 +20,8 @@ push-latest:
     docker push {{user}}/{{name}} :{{version}} && \
     docker push {{user}}/{{name}} :latest 
 
-run-d:
-    docker run --rm \
-        -d \
-        --name {{name}} \
-        -v ./logs:/var/log/ \
-        -v ./data/bkp_db/:/app/{{name}}/bkp_db \
-        {{user}}/{{name}}:{{version}}
+run-dev:
+    docker compose -f docker-compose.dev.yml up -d
 
 run:
     docker run --rm \
