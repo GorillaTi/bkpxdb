@@ -1,0 +1,20 @@
+# Tipo de lista: "csv" o "lst"
+#TIPO_LISTA="lst"
+
+# Directirios de copias de respaldo
+D_BKP="bkp_db"
+
+# Copia a Directorio Remotos opciones "no" (Pordefecto) "yes"
+#C_RMTE="no"
+
+# Almacenamiento remoto
+# R_USER="usuario"
+# R_HOST="192.168.25$.254"
+# R_DIR="/media/BKP/bkp_db"
+# R_PASS="Manager"
+
+# Directirios Remotos
+# D_NFS="/mnt/NFSBkps/bkps_db"
+
+# Numero de filas
+N_ROWS="16"
