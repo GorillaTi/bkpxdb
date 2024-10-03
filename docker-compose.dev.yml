@@ -1,0 +1,20 @@
+name: BkpXDB
+services:
+    bkpxdb:
+        image: ecespedes/bkpxdb:${VER:-latest}
+        container_name: bkpxdb-dev
+        hostname: bkpxdb-dev
+        restart: always
+        ports:
+            - ${PORT_M:-3306}:3306
+            - ${PORT_P:-5432}:5432
+        volumes:
+            # Volúmenes de Directorios
+            - ./data/bkp_db/:/app/bkp_db:rw
+            - ./src/list:/app/scripts/list:rw
+            #Volumen de Archivos
+            - ./src/crontab:/app/crontab/crontab:rw
+            - ./src/.conf:/app/scripts/.conf:rw
+            - ./src/backup.sh:/app/scripts/backup.sh:rw
+            - ./logs/cron:/var/log/cron/:rw
+            - ./logs/app:/var/log/app/:rw
