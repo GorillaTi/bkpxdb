@@ -14,6 +14,6 @@ services:
             - ./src/list:/app/scripts/list:rw
             - ./logs/cron:/var/log/cron/:rw
             - ./logs/app:/var/log/app/:rw
-            #Volumen de Archivos
+            # Volumen de Archivos
             - ./src/crontab:/app/crontab/crontab:rw
             - ./src/.conf:/app/scripts/.conf:rw
