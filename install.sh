@@ -81,7 +81,7 @@ f_install() {
     if [[ -f "$dir_root/$dir_src/crontab" ]]; then
         echo "[INFO] El archivo $dir_root/$dir_src/crontab ya existe"
     else
-        wget -nc -O "$dir_root/$dir_src/crontab" https://raw.githubusercontent.com/GorillaTi/bkpxdb/refs/heads/main/src/crontab
+        wget -nc -O "$dir_root/$dir_src/crontab" https://raw.githubusercontent.com/GorillaTi/bkpxdb/refs/heads/main/src/crontab.example
         echo "[WARNING] El archivo $dir_root/$dir_src/crontab ha sido descargado"
     fi
     # .conf
