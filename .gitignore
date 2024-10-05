@@ -32,6 +32,7 @@ example.env
 **/letsencrypt
 **/src/list/db.lst
 **/src/list/db_list.csv
+**/src/crontab
 
 # Ignore development files and directories
 #node_modules/
