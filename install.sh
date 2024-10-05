@@ -78,18 +78,18 @@ f_install() {
         echo "[WARNING] El archivo $dir_root/$dir_src/list/db_list.csv ha sido descargado"
     fi
     # crontab
-    if [[ -f "$dir_root/$dir_src/list/crontab" ]]; then
-        echo "[INFO] El archivo $dir_root/$dir_src/list/crontab ya existe"
+    if [[ -f "$dir_root/$dir_src/crontab" ]]; then
+        echo "[INFO] El archivo $dir_root/$dir_src/crontab ya existe"
     else
-        wget -nc -O "$dir_root/$dir_src/list/crontab" https://raw.githubusercontent.com/GorillaTi/bkpxdb/refs/heads/main/src/crontab
-        echo "[WARNING] El archivo $dir_root/$dir_src/list/crontab ha sido descargado"
+        wget -nc -O "$dir_root/$dir_src/crontab" https://raw.githubusercontent.com/GorillaTi/bkpxdb/refs/heads/main/src/crontab
+        echo "[WARNING] El archivo $dir_root/$dir_src/crontab ha sido descargado"
     fi
     # .conf
-    if [[ -f "$dir_root/$dir_src/list/.conf" ]]; then
-        echo "[INFO] El archivo $dir_root/$dir_src/list/.conf ya existe"
+    if [[ -f "$dir_root/$dir_src/.conf" ]]; then
+        echo "[INFO] El archivo $dir_root/$dir_src/.conf ya existe"
     else
-        wget -nc -O "$dir_root/$dir_src/list/.conf" https://raw.githubusercontent.com/GorillaTi/bkpxdb/refs/heads/main/src/.conf.example
-        echo "[WARNING] El archivo $dir_root/$dir_src/list/.conf ha sido descargado"
+        wget -nc -O "$dir_root/$dir_src/.conf" https://raw.githubusercontent.com/GorillaTi/bkpxdb/refs/heads/main/src/.conf.example
+        echo "[WARNING] El archivo $dir_root/$dir_src/.conf ha sido descargado"
     fi
     # docker-compose.yml
     if [[ -f "$dir_root/docker-compose.yml" ]]; then
