@@ -1,0 +1,4 @@
+* * * * * root date >> /var/log/cron/cron.log 2>&1
+* * * * * root /app/scripts/cron-test.sh
+*/10 * * * * root truncate -s 0 /var/log/cron/cron*.log
+# New line charter required!
