@@ -1,6 +1,6 @@
 # BkpXDB
 
-![GitHub Tag](https://img.shields.io/github/v/tag/GorillaTi/bkpxdb)![GitHub last commit](https://img.shields.io/github/last-commit/GorillaTi/bkpxdb)![GitHub last commit (branch)](https://img.shields.io/github/last-commit/GorillaTi/bkpxdb/main)![Docker Pulls](https://img.shields.io/docker/pulls/ecespedes/bkpxdb)![GitHub License](https://img.shields.io/github/license/GorillaTi/bkpxdb)![GitHub Repo stars](https://img.shields.io/github/stars/GorillaTi/bkpxdb)![GitHub forks](https://img.shields.io/github/forks/GorillaTi/bkpxdb)
+![GitHub Tag](https://img.shields.io/github/v/tag/GorillaTi/bkpxdb) ![GitHub last commit](https://img.shields.io/github/last-commit/GorillaTi/bkpxdb) ![GitHub last commit (branch)](https://img.shields.io/github/last-commit/GorillaTi/bkpxdb/main) ![Docker Pulls](https://img.shields.io/docker/pulls/ecespedes/bkpxdb) ![GitHub License](https://img.shields.io/github/license/GorillaTi/bkpxdb) ![GitHub Repo stars](https://img.shields.io/github/stars/GorillaTi/bkpxdb) ![GitHub forks](https://img.shields.io/github/forks/GorillaTi/bkpxdb)
 
 Copias de seguridad automatizada por medio de contenedor de los gestores de bases de datos MariaDB y PostgreSQL
 
