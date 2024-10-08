@@ -10,7 +10,7 @@
 # Version: 1.0.0
 
 # Exit if any command fails
-set -eou pipefail
+# set -eou pipefail
 
 f_create_directories() {
     # Variables locales
