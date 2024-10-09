@@ -22,5 +22,5 @@ LOGS="/var/log/cron/cron.log"
     chmod 644 /etc/cron.d/bkpxdb-cron
 
     echo "Starting crond... $(date)"
-    service cron restart
+    #    service cron restart
 } >>"$LOGS" 2>&1
