@@ -44,13 +44,14 @@ Descargando archivos necesarios
 ```bash
 wget -nc -O "src/list/db_list.csv" https://raw.githubusercontent.com/GorillaTi/bkpxdb/refs/heads/main/src/list/db_list.csv.example
 ```
-<!-- 
+
 - crontab
 
 ```bash
  wget -nc -O "src/crontab" https://raw.githubusercontent.com/GorillaTi/bkpxdb/refs/heads/main/src/crontab.example
 ```
 
+<!-- 
 - .conf
 
 ```bash
@@ -75,6 +76,7 @@ Estructura de directorios y archivos
 │   │   ├── app
 │   │   └── cron
 │   └── src
+│       ├── crontab
 │       └── list
 │           ├── db_list.csv
 │           └── db.lst

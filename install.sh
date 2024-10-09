@@ -77,14 +77,13 @@ f_install() {
         wget -nc -O "$dir_root/$dir_src/list/db_list.csv" https://raw.githubusercontent.com/GorillaTi/bkpxdb/refs/heads/main/src/list/db_list.csv.example
         echo "[WARNING] El archivo $dir_root/$dir_src/list/db_list.csv ha sido descargado"
     fi
-    # TODO: modificacion de forma de configuracion de crontab
-    # crontab
-    # if [[ -f "$dir_root/$dir_src/crontab" ]]; then
-    #     echo "[INFO] El archivo $dir_root/$dir_src/crontab ya existe"
-    # else
-    #     wget -nc -O "$dir_root/$dir_src/crontab" https://raw.githubusercontent.com/GorillaTi/bkpxdb/refs/heads/main/src/crontab.example
-    #     echo "[WARNING] El archivo $dir_root/$dir_src/crontab ha sido descargado"
-    # fi
+    crontab
+    if [[ -f "$dir_root/$dir_src/crontab" ]]; then
+        echo "[INFO] El archivo $dir_root/$dir_src/crontab ya existe"
+    else
+        wget -nc -O "$dir_root/$dir_src/crontab" https://raw.githubusercontent.com/GorillaTi/bkpxdb/refs/heads/main/src/crontab.example
+        echo "[WARNING] El archivo $dir_root/$dir_src/crontab ha sido descargado"
+    fi
     # FIXME: solucionar problemas de funcionamiento
     # .conf
     # if [[ -f "$dir_root/$dir_src/.conf" ]]; then
