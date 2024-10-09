@@ -17,7 +17,7 @@ set -eou pipefail
 # ===============================================================================
 
 # Directorio Actual
-DIR_ACTUAL=$(pwd)
+DIR_ACTUAL="/app"
 
 # Archivos de Logs del Script
 ERROR_LOG="/var/log/app/error.log"  # Logs de Error del script
