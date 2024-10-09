@@ -86,13 +86,14 @@ f_gestion_logs() {
 	echo "[$t_log $(date +%Y-%m-%d:%H:%M)] $msg_log." >>"$arch_log"
 }
 
+#  BUG: Cargando las variables de entorno desde el archivo .conf
 # Cargar las variables de entorno desde el archivo .conf
-if [[ -f "$DIR_ACTUAL/scripts/.conf" ]]; then
-	. "$DIR_ACTUAL/scripts/.conf"
-	f_gestion_logs "i" "Variables de Entorno cargadas desde .conf"
-else
-	f_gestion_logs "e" "El archivo .conf no existe"
-fi
+# if [[ -f "$DIR_ACTUAL/scripts/.conf" ]]; then
+# . "$DIR_ACTUAL/scripts/.conf"
+# f_gestion_logs "i" "Variables de Entorno cargadas desde .conf"
+# else
+# f_gestion_logs "e" "El archivo .conf no existe"
+# fi
 
 # TODO: Validar que las variables de entorno esten cargadas
 # Configuración del equipo remoto
