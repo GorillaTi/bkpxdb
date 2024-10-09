@@ -11,13 +11,13 @@ Copias de seguridad automatizada por medio de contenedor de los gestores de base
 
 ### Instalación Desatendida
 
-Instalar bkpxdb via curl
+Instalando bkpxdb via curl
 
 ```bash
 sh -c "$(curl -fsSL https://raw.githubusercontent.com/GorillaTi/bkpxdb/refs/heads/main/install.sh)"
 ```
 
-Instalar bkpxdb via wget
+Instalando bkpxdb via wget
 
 ```bash
 sh -c "$(wget https://raw.githubusercontent.com/GorillaTi/bkpxdb/refs/heads/main/install.sh -O -)"
@@ -39,12 +39,12 @@ cd bkpxdb
 
 Descargando archivos necesarios
 
-- db_list
+- db_list.csv
 
 ```bash
 wget -nc -O "src/list/db_list.csv" https://raw.githubusercontent.com/GorillaTi/bkpxdb/refs/heads/main/src/list/db_list.csv.example
 ```
-
+<!-- 
 - crontab
 
 ```bash
@@ -55,7 +55,7 @@ wget -nc -O "src/list/db_list.csv" https://raw.githubusercontent.com/GorillaTi/b
 
 ```bash
 wget -nc -O "src/.conf" https://raw.githubusercontent.com/GorillaTi/bkpxdb/refs/heads/main/src/.conf.example
-```
+``` -->
 
 - docker-compose.yml
 
@@ -75,8 +75,6 @@ Estructura de directorios y archivos
 │   │   ├── app
 │   │   └── cron
 │   └── src
-│       ├── .conf
-│       ├── crontab
 │       └── list
 │           ├── db_list.csv
 │           └── db.lst
@@ -122,7 +120,7 @@ sysadmin;$Sistemas.123;172.16.20.20;3303;sysadmin;mysql
 ### Configuración archivo `crontab`
 
 ```bash
-vim src/crontab
+docker exec -it bkpxdb vim crontab/crontab
 ```
 
 Ejemplo:
@@ -174,6 +172,19 @@ docker exec -it bkpxdb /app/scripts/backup.sh
 
 - Envió de los archivos `logs`  por medio de correo electrónico.
 - Copia automatizada de los archivos de copia de seguridad a un dispositivo de almacenamiento de red.
+
+## Revision de Logs
+
+```bash
+tail -f logs/app/error.log
+```
+Archivos de Logs:
+
+- logs/app/error.log
+- logs/app/info.log
+- logs/app/warning.log
+- logs/cron/cron-test.log
+- logs/cron/cron.log
 
 ## Herramientas de formateo y comprobación de Cron
 
