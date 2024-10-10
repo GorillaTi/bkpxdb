@@ -29,7 +29,7 @@ run-prod:
 stop-dev:
     docker compose -f docker-compose.dev.yml down
 
-run-prod:
+stop-prod:
     docker compose -f docker-compose.yml down
 
 run:
