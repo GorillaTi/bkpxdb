@@ -12,8 +12,8 @@ services:
             # Volúmenes de Directorios
             - ./data/bkp_db/:/app/bkp_db:rw
             - ./src/list:/app/scripts/list:rw
-            - ./logs/cron:/var/log/cron/:rw
-            - ./logs/app:/var/log/app/:rw
+            - ./logs/cron:/var/log/cron
+            - ./logs/app:/var/log/app
             # Volumen de Archivos
             - ./data/config/bkpxdb-cron:/etc/cron.d/bkpxdb-cron
             - ./src/crontab:/app/crontab/crontab:rw
