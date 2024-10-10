@@ -33,7 +33,7 @@ RUN apt-get clean && \
     /var/tmp/*
 
 # Configurando Cron Jobs 
-COPY src/crontab /etc/cron.d/bkpxdb-cron
+COPY src/crontab.example /etc/cron.d/bkpxdb-cron
 RUN chown root:root /etc/cron.d/bkpxdb-cron && chmod 644 /etc/cron.d/bkpxdb-cron
 
 # Copiando scrip de configuración de Cron Jobs
