@@ -23,6 +23,15 @@ push-latest:
 run-dev:
     docker compose -f docker-compose.dev.yml up -d
 
+run-prod:
+    docker compose -f docker-compose.yml up -d
+
+stop-dev:
+    docker compose -f docker-compose.dev.yml down
+
+run-prod:
+    docker compose -f docker-compose.yml down
+
 run:
     docker run --rm \
         -d \
