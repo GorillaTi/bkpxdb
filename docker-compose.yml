@@ -15,5 +15,5 @@ services:
             - ./logs/cron:/var/log/cron/:rw
             - ./logs/app:/var/log/app/:rw
             # Volumen de Archivos
+            - ./data/config/bkpxdb-cron:/etc/cron.d/bkpxdb-cron
             - ./src/crontab:/app/crontab/crontab:rw
-            - ./src/.conf:/app/scripts/.conf:rw
