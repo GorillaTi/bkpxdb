@@ -11,13 +11,13 @@ Copias de seguridad automatizada por medio de contenedor de los gestores de base
 
 ### Instalación Desatendida
 
-Instalando bkpxdb via curl
+- Instalando bkpxdb via curl
 
 ```bash
 sh -c "$(curl -fsSL https://raw.githubusercontent.com/GorillaTi/bkpxdb/refs/heads/main/install.sh)"
 ```
 
-Instalando bkpxdb via wget
+- Instalando bkpxdb via wget
 
 ```bash
 sh -c "$(wget https://raw.githubusercontent.com/GorillaTi/bkpxdb/refs/heads/main/install.sh -O -)"
@@ -25,7 +25,7 @@ sh -c "$(wget https://raw.githubusercontent.com/GorillaTi/bkpxdb/refs/heads/main
 
 ### Instalación Manual  
 
-Crear los directorios base necesarios
+#### Crear los directorios base necesarios
 
 ```bash
 mkdir -p bkpxdb bkpxdb/src/list bkpxdb/logs/app bkpxdb/logs/cron
@@ -37,12 +37,18 @@ Cambiarse al directorio `bkpxdb`
 cd bkpxdb
 ```
 
-Descargando archivos necesarios
+#### Descargando archivos necesarios
 
 - db_list.csv
 
 ```bash
 wget -nc -O "src/list/db_list.csv" https://raw.githubusercontent.com/GorillaTi/bkpxdb/refs/heads/main/src/list/db_list.csv.example
+```
+
+- bkpxdb-cron
+
+```bash
+wget -nc -O "data/config/bkpxdb-cron" https://raw.githubusercontent.com/GorillaTi/bkpxdb/refs/heads/main/src/cront.example
 ```
 
 - crontab
@@ -51,12 +57,11 @@ wget -nc -O "src/list/db_list.csv" https://raw.githubusercontent.com/GorillaTi/b
  wget -nc -O "src/crontab" https://raw.githubusercontent.com/GorillaTi/bkpxdb/refs/heads/main/src/crontab.example
 ```
 
-<!-- 
 - .conf
 
 ```bash
 wget -nc -O "src/.conf" https://raw.githubusercontent.com/GorillaTi/bkpxdb/refs/heads/main/src/.conf.example
-``` -->
+```
 
 - docker-compose.yml
 
@@ -67,26 +72,46 @@ wget -O "docker-compose.yml" https://raw.githubusercontent.com/GorillaTi/bkpxdb/
 Estructura de directorios y archivos
 
 ```shell
-.
-├── bkpxdb
-│   ├── data
-│   │   └── bkp_db
-│   ├── docker-compose.yml
-│   ├── logs
-│   │   ├── app
-│   │   └── cron
-│   └── src
-│       ├── crontab
-│       └── list
-│           ├── db_list.csv
-│           └── db.lst
-└── install.sh
+bkpxdb
+├── data
+│   └── config
+│       └── bkpxdb-cron
+├── docker-compose.yml
+├── logs
+│   ├── app
+│   └── cron
+└── src
+    ├── .conf
+    ├── crontab
+    └── list
+        ├── db_list.csv
+        └── db.lst
 ```
 
 Para visualizar use el comando
 
 ```bash
 tree -a
+```
+
+##  Iniciar el servicio
+
+```bash
+docker compose up -d
+```
+
+## Cambiando Permisos del archivo `bkpxdb-cron`
+
+- Con el contenedor en ejecución
+
+```bash
+docker exec -it bkpxdb chown root:root /etc/cron.d/bkpxdb-cron
+```
+
+- Sin el contenedor en ejecución
+
+```bash
+sudo chown root:root /data/config/bkpxdb-cron
 ```
 
 ## Configuración Básicas

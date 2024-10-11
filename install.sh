@@ -79,6 +79,7 @@ f_install() {
             echo "[WARNING] El archivo $dir_root/$dir_src/list/db.lst ha sido descargado"
         } >>"$tmp_logs" 2>&1
     fi
+
     # db_list.csv
     if [[ -f "$dir_root/$dir_src/list/db_list.csv" ]]; then
         echo "[INFO] El archivo $dir_root/$dir_src/list/db_list.csv ya existe" >>"$tmp_logs" 2>&1
@@ -88,6 +89,7 @@ f_install() {
             echo "[WARNING] El archivo $dir_root/$dir_src/list/db_list.csv ha sido descargado"
         } >>"$tmp_logs" 2>&1
     fi
+
     #crontab
     if [[ -f "$dir_root/$dir_src/crontab" ]]; then
         echo "[INFO] El archivo $dir_root/$dir_src/crontab ya existe" >>"$tmp_logs" 2>&1
@@ -97,6 +99,7 @@ f_install() {
             echo "[WARNING] El archivo $dir_root/$dir_src/crontab ha sido descargado"
         } >>"$tmp_logs" 2>&1
     fi
+
     #.conf
     if [[ -f "$dir_root/$dir_src/.conf" ]]; then
         echo "[INFO] El archivo $dir_root/$dir_src/.conf ya existe" >>"$tmp_logs" 2>&1
@@ -106,7 +109,8 @@ f_install() {
             echo "[WARNING] El archivo $dir_root/$dir_src/.conf ha sido descargado"
         } >>"$tmp_logs" 2>&1
     fi
-    # crontab
+
+    # bkpxdb-cron
     if [[ -f "$dir_root/$dir_data/$dir_config/bkpxdb-cron" ]]; then
         echo "[INFO] El archivo $dir_root/$dir_data/$dir_config/bkpxdb-cron ya existe" >>"$tmp_logs" 2>&1
     else
