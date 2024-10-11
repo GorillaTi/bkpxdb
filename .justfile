@@ -5,12 +5,19 @@ version      := `git tag -l  | tail -n1`
 default:
     @just --list
 
-build:
+build-latest:
     @echo {{version}}
     @echo {{name}}
     docker build -f ${PWD}/Dockerfile \
         -t {{user}}/{{name}}:{{version}} \
         -t {{user}}/{{name}}:latest \
+        .
+
+build-test:
+    @echo {{version}}
+    @echo {{name}}
+    docker build -f ${PWD}/Dockerfile \
+        -t {{user}}/{{name}}:{{version}} \
         .
 
 push-all:
