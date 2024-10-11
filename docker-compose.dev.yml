@@ -19,4 +19,3 @@ services:
             - ./src/crontab:/app/crontab/crontab:rw
             - ./src/.conf:/app/scripts/.conf:rw
             - ./src/backup.sh:/app/scripts/backup.sh:rw
-        command: cron-config

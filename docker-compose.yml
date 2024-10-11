@@ -17,4 +17,3 @@ services:
             # Volumen de Archivos
             - ./data/config/bkpxdb-cron:/etc/cron.d/bkpxdb-cron:rw
             - ./src/crontab:/app/crontab/crontab:rw
-        run: cron-config

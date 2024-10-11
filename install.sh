@@ -140,5 +140,6 @@ f_install() {
 truncate -s 0 "$tmp_logs"
 echo "################## INICIANDO LA INSTALACIO $(date +"%Y-%m-%d_%H:%M:%S")##################" >>"$tmp_logs" 2>&1
 f_install "12-solucion-de-problemas"
+docker exec -it bkpxdb chown root:root /etc/cron.d/bkpxdb-cron >>"$tmp_logs" 2>&1
 echo "################## FIN DE LA INSTALACION $(date +"%Y-%m-%d_%H:%M:%S")##################" >>"$tmp_logs" 2>&1
 cat "$tmp_logs" >"install_$(date +"%Y-%m-%d_%H:%M:%S").log"
