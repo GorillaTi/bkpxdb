@@ -4,7 +4,7 @@ services:
         image: ecespedes/bkpxdb:${VER:-latest}
         container_name: bkpxdb-dev
         hostname: bkpxdb-dev
-        restart: always
+        restart: on-failure
         ports:
             - ${PORT_M:-3306}:3306
             - ${PORT_P:-5432}:5432
