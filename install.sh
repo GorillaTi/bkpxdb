@@ -14,7 +14,7 @@ TMP_LOGS="/tmp/logs.log"
 DIR_ROOT="bkpxdb"
 
 # Exit if any command fails
-set -eou
+set -eu
 
 f_create_directories() {
     # Variables locales
