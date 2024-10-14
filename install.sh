@@ -140,7 +140,7 @@ truncate -s 0 "$TMP_LOGS"
 # Iniciando la instalación
 echo "################## INICIANDO LA INSTALACIO $(date +"%Y-%m-%d_%H:%M:%S")##################" >>"$TMP_LOGS" 2>&1
 # Instalando dependencias
-f_install "12-solucion-de-problemas"
+f_install "main"
 
 # Iniciando el contenedor
 echo "Inicial el contenedor ejecutar" >>"$TMP_LOGS" 2>&1
